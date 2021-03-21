@@ -1,4 +1,6 @@
-package macroTracker;
+package macroTracker.Database;
+import macroTracker.Classes.Food;
+
 import java.sql.*;
 import java.util.ArrayList;
 

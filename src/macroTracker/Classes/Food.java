@@ -1,4 +1,4 @@
-package macroTracker;
+package macroTracker.Classes;
 
 public class Food {
 
