@@ -1,4 +1,4 @@
 package macroTracker.Controllers;
 
-public class Controller {
+public class DashboardController {
 }

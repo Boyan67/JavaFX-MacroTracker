@@ -91,10 +91,10 @@ public class Database {
         }
     }
 
-    public void deleteFood(Food food){
+    public void deleteFood(int id){
         try {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM " + databaseName + " WHERE ID = ?");
-            statement.setInt(1, food.getId());
+            statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException throwables) {
             System.out.println("deleteFood(Food food) error: ");
@@ -115,7 +115,7 @@ public class Database {
         String query = "SELECT * FROM " +databaseName+ " WHERE name LIKE '%" + searchTerm + "%'";
         try (
                 Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query);
+                ResultSet resultSet = statement.executeQuery(query)
         ){
             return getFoodList(resultSet);
         } catch (SQLException throwables) {

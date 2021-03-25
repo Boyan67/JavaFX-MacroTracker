@@ -7,46 +7,36 @@ import java.util.ArrayList;
 
 public class FoodDiary {
     private int id;
-    private ArrayList<Food> foods;
-    Database database;
+    private Database database;
     private int totalCalories;
 
-    public void changeDiary(int diaryNum){
-        database = new Database("day"+diaryNum);
+    public void changeDiary(int day){
+        database = new Database("day"+day);
     }
 
     public FoodDiary(int id){
         this.id = id;
-        foods = new ArrayList<>();
         database = new Database("day"+id);
         this.totalCalories = 0;
     }
 
     public void addFood(Food food){
-        foods.add(food);
         database.insertFood(food);
         totalCalories += food.getCalories();
     }
-    public void removeFood(Food food){
-        foods.remove(food);
-        totalCalories -= food.getCalories();
+
+    public void removeFood(int id){
+        database.deleteFood(id);
+        calculateCalories();
     }
     public void removeFood(){
-        totalCalories -= foods.get(foods.size()-1).getCalories();
-        foods.remove(foods.size()-1);
         database.deleteFood();
-
     }
 
     public void displayFoods(){
-        for (Food food : foods){
+        for (Food food : database.getAllFoods()){
             System.out.println(food);
         }
-    }
-
-    public void populateDiary(){
-        foods = database.getAllFoods();
-        calculateCalories();
     }
 
     public void searchFoods(String search){
@@ -57,8 +47,14 @@ public class FoodDiary {
     }
 
     public void calculateCalories(){
-        for (Food food : foods){
+        for (Food food : database.getAllFoods()){
             totalCalories += food.getCalories();
+        }
+    }
+
+    public void clearDiary(){
+        for (Food ignored : database.getAllFoods()){
+            database.deleteFood();
         }
     }
 

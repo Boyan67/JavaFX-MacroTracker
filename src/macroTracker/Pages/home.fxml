@@ -1,8 +1,101 @@
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.GridPane?>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
-<GridPane fx:controller="macroTracker.Controllers.Controller"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="751.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="macroTracker.Controllers.DashboardController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" percentWidth="25.0" prefWidth="180.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" percentWidth="30.0" prefWidth="233.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="68.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="10.0" prefWidth="82.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="145.0" minHeight="9.0" prefHeight="58.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="272.0" minHeight="10.0" prefHeight="42.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="310.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox prefHeight="380.0" prefWidth="173.0" GridPane.rowSpan="3">
+         <children>
+            <Hyperlink text="Dashboard">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink text="Shopping List">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+            <Hyperlink text="Recepies">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </Hyperlink>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <GridPane.margin>
+            <Insets left="20.0" top="20.0" />
+         </GridPane.margin>
+      </VBox>
+      <Label text="Dashboard" GridPane.columnIndex="1">
+         <font>
+            <Font size="37.0" />
+         </font>
+      </Label>
+      <HBox prefHeight="53.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <Button mnemonicParsing="false" text="Prev" />
+            <Label text="Day 1">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Button mnemonicParsing="false" text="Next" />
+         </children>
+      </HBox>
+      <ListView prefHeight="293.0" prefWidth="438.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" text="Add Food" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <children>
+            <Label prefHeight="30.0" prefWidth="175.0" text="Totals">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Pane prefHeight="44.0" prefWidth="182.0" />
+         </children>
+      </HBox>
+      <Label prefHeight="17.0" prefWidth="42.0" text="Carbs" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+      <Label text="Fats" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label text="Protein" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+      <Label text="Cals" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+   </children>
 </GridPane>
