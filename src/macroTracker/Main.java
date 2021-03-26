@@ -5,15 +5,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import macroTracker.Classes.Food;
 
 public class Main extends Application {
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Pages/home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Controllers/home.fxml"));
 
         primaryStage.setTitle("Macro Tracker");
+
+        Food food = new Food(1, "bob", 500);
+        Food food2 = new Food(1, "bob", 500);
+        System.out.println(food.hashCode());
+        System.out.println(food2.hashCode());
 
         Scene scene = new Scene(root, 720, 480);
         primaryStage.setScene(scene);
@@ -21,16 +27,5 @@ public class Main extends Application {
     }
 
 
-//    public static void main(String[] args) {
-//        //launch(args);
-//        FoodDiary diary = new FoodDiary(1);
-//        diary.changeDiary(1);
-//
-//        System.out.println("Before clear");
-//
-//        diary.removeFood(0);
-//
-//        diary.displayFoods();
-//        System.out.println(diary.getTotalCalories());
-//    }
+
 }

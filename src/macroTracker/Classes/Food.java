@@ -1,10 +1,10 @@
 package macroTracker.Classes;
-
 public class Food {
 
     int id;
     private String name;
     private int calories;
+
 
     public Food(){
         this.name = "-";
@@ -14,6 +14,12 @@ public class Food {
     public Food(String name, int calories){
         this.name = name;
         this.calories = calories;
+    }
+
+    public Food(int id, String name, int calories) {
+        this.name = name;
+        this.calories = calories;
+        this.id = id;
     }
 
     @Override

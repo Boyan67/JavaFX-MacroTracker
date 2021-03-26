@@ -1,8 +1,8 @@
 package macroTracker.Classes;
 
-import macroTracker.Classes.Food;
 import macroTracker.Database.Database;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FoodDiary {
@@ -11,8 +11,10 @@ public class FoodDiary {
     private int totalCalories;
 
     public void changeDiary(int day){
+        id = day;
         database = new Database("day"+day);
     }
+
 
     public FoodDiary(int id){
         this.id = id;
@@ -20,17 +22,23 @@ public class FoodDiary {
         this.totalCalories = 0;
     }
 
-    public void addFood(Food food){
+    public int getId() {
+        return id;
+    }
+
+    public ArrayList<Food> getEveryFood(){
+        return database.getAllFoods();
+    }
+
+    public void addFood(Food food) throws SQLException {
         database.insertFood(food);
-        totalCalories += food.getCalories();
+        calculateCalories();
     }
 
     public void removeFood(int id){
         database.deleteFood(id);
+        System.out.println("Deleted food with id: " + id);
         calculateCalories();
-    }
-    public void removeFood(){
-        database.deleteFood();
     }
 
     public void displayFoods(){
@@ -47,15 +55,14 @@ public class FoodDiary {
     }
 
     public void calculateCalories(){
+        totalCalories = 0;
         for (Food food : database.getAllFoods()){
             totalCalories += food.getCalories();
         }
     }
 
     public void clearDiary(){
-        for (Food ignored : database.getAllFoods()){
-            database.deleteFood();
-        }
+        database.deleteAllFoods();
     }
 
     public int getTotalCalories() {

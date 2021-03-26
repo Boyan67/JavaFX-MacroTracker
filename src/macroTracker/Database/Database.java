@@ -51,13 +51,14 @@ public class Database {
         return null;
     }
 
-    private ArrayList<Food> getFoodList(ResultSet resultSet){
+    public ArrayList<Food> getFoodList(ResultSet resultSet){
         ArrayList<Food> foodList = new ArrayList<>();
         try {
             while (resultSet.next()){
+                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int calories = resultSet.getInt("calories");
-                Food food = new Food(name, calories);
+                Food food = new Food(id, name, calories);
                 foodList.add(food);
         }
         } catch (SQLException throwables) {
@@ -67,18 +68,14 @@ public class Database {
         return foodList;
     }
 
-    public int generateId() throws SQLException {
-        ArrayList<Food> currentFoods = getAllFoods();
-        if (currentFoods.size() > 0) {
-            return currentFoods.size() + 1;
-        }
-        return 0;
+    public int generateId(Food food) throws SQLException {
+        return food.hashCode();
     }
 
     public void insertFood(Food food){
         try {
-            int id = generateId();
-            food.setId(id);
+            food.setId(generateId(food));
+            int id = food.getId();
             String name = food.getName();
             int calories = food.getCalories();
             Statement statement = connection.createStatement();
@@ -101,13 +98,14 @@ public class Database {
             throwables.printStackTrace();
         }
     }
-    public void deleteFood(){
+
+
+    public void deleteAllFoods(){
         try {
-            PreparedStatement statement = connection.prepareStatement("DELETE FROM " + databaseName + " WHERE ID = ?");
-            statement.setInt(1, generateId()-1);
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM " + databaseName);
             statement.executeUpdate();
         } catch (SQLException throwables) {
-            System.out.println("deleteFood() error: ");
+            System.out.println("deleteAllFoods() error: ");
             throwables.printStackTrace();
         }
     }

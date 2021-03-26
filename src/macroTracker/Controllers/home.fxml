@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -72,17 +71,16 @@
       </Label>
       <HBox prefHeight="53.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <Button mnemonicParsing="false" text="Prev" />
-            <Label text="Day 1">
+            <Button mnemonicParsing="false" onAction="#prevButtonPressed" text="Prev" />
+            <Label fx:id="lblDay" text="Day 1">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" text="Next" />
+            <Button mnemonicParsing="false" onAction="#nextButtonPressed" text="Next" />
          </children>
       </HBox>
-      <ListView prefHeight="293.0" prefWidth="438.0" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" text="Add Food" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button mnemonicParsing="false" onAction="#addButtonPressed" text="Add Food" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
             <Label prefHeight="30.0" prefWidth="175.0" text="Totals">
@@ -90,12 +88,37 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Pane prefHeight="44.0" prefWidth="182.0" />
          </children>
       </HBox>
-      <Label prefHeight="17.0" prefWidth="42.0" text="Carbs" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-      <Label text="Fats" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-      <Label text="Protein" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-      <Label text="Cals" GridPane.columnIndex="5" GridPane.rowIndex="4" />
+      <Label alignment="CENTER" prefHeight="17.0" prefWidth="50.0" text="420" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="60" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="120" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="1000" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Label>
+      <ListView fx:id="foodListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#removeButtonPressed" text="Remove Food" GridPane.columnIndex="2" GridPane.rowIndex="3" />
    </children>
 </GridPane>
