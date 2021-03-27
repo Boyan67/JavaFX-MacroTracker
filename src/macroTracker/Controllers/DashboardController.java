@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class DashboardController {
     FoodDiary foodDiary = new FoodDiary(1);
     @FXML
-    ListView foodListView;
+    ListView<GridPane> foodListView;
     @FXML
     Label lblDay;
 
@@ -28,7 +28,7 @@ public class DashboardController {
 
     // ========== Button Functions ==========
     public void addButtonPressed() throws SQLException {
-        Food food = new Food("bob", 600);
+        Food food = new Food("bob", 0, 0, 0, 600);
         foodDiary.addFood(food);
         FoodGrid foodGrid = new FoodGrid(food);
         foodListView.getItems().add(foodGrid.createFoodGrid());
@@ -72,8 +72,8 @@ public class DashboardController {
         }
     }
     public void clearView(){
-        for (int i = foodListView.getItems().size()-1; i >= 0; i--){
-            foodListView.getItems().remove(i);
+        if (foodListView.getItems().size() > 0) {
+            foodListView.getItems().subList(0, foodListView.getItems().size()).clear();
         }
     }
     public void showTable(){
@@ -83,14 +83,9 @@ public class DashboardController {
 
     // ========== FoodGrid Class ==========
     class FoodGrid {
-        private int id;
         private Label name, carbs, fats, protein, calories;
         private GridPane grid = new GridPane();
         private Button btn;
-
-        public int getId() {
-            return id;
-        }
 
 
         FoodGrid(Food food){
