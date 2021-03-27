@@ -2,13 +2,15 @@ package macroTracker.Classes;
 
 import macroTracker.Database.Database;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class FoodDiary {
     private int id;
     private Database database;
     private int totalCalories;
+    private int totalCarbs;
+    private int totalFats;
+    private int totalProtein;
 
     public void changeDiary(int day){
         id = day;
@@ -27,25 +29,20 @@ public class FoodDiary {
     }
 
     public ArrayList<Food> getEveryFood(){
+        calculateMacros();
         return database.getAllFoods();
     }
 
-    public void addFood(Food food) throws SQLException {
+    public void addFood(Food food) {
         database.insertFood(food);
-        calculateCalories();
+        calculateMacros();
     }
 
     public void removeFood(int id){
         database.deleteFood(id);
-        System.out.println("Deleted food with id: " + id);
-        calculateCalories();
+        calculateMacros();
     }
 
-    public void displayFoods(){
-        for (Food food : database.getAllFoods()){
-            System.out.println(food);
-        }
-    }
 
     public void searchFoods(String search){
         ArrayList<Food> foundFoods = database.search(search);
@@ -54,18 +51,37 @@ public class FoodDiary {
         }
     }
 
-    public void calculateCalories(){
+    public void calculateMacros(){
+        totalCarbs = 0;
+        totalFats = 0;
+        totalProtein = 0;
         totalCalories = 0;
         for (Food food : database.getAllFoods()){
+            totalCarbs += food.getCarbs();
+            totalFats += food.getFats();
+            totalProtein += food.getProtein();
             totalCalories += food.getCalories();
         }
     }
 
     public void clearDiary(){
         database.deleteAllFoods();
+        calculateMacros();
     }
 
     public int getTotalCalories() {
         return totalCalories;
+    }
+
+    public int getTotalCarbs() {
+        return totalCarbs;
+    }
+
+    public int getTotalFats() {
+        return totalFats;
+    }
+
+    public int getTotalProtein() {
+        return totalProtein;
     }
 }

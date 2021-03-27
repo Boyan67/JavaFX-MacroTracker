@@ -57,27 +57,21 @@ public class Food {
     public void setCalories(int calories) {
         this.calories = calories;
     }
-
     public int getCarbs() {
         return carbs;
     }
-
     public void setCarbs(int carbs) {
         this.carbs = carbs;
     }
-
     public int getFats() {
         return fats;
     }
-
     public void setFats(int fats) {
         this.fats = fats;
     }
-
     public int getProtein() {
         return protein;
     }
-
     public void setProtein(int protein) {
         this.protein = protein;
     }

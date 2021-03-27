@@ -80,7 +80,6 @@
             <Button mnemonicParsing="false" onAction="#nextButtonPressed" text="Next" />
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#addButtonPressed" text="Add Food" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
          <children>
             <Label prefHeight="30.0" prefWidth="175.0" text="Totals">
@@ -90,28 +89,28 @@
             </Label>
          </children>
       </HBox>
-      <Label alignment="CENTER" prefHeight="17.0" prefWidth="50.0" text="420" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+      <Label fx:id="totalCarbs" alignment="CENTER" prefHeight="17.0" prefWidth="50.0" text="420" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="60" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+      <Label fx:id="totalFats" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="60" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="120" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+      <Label fx:id="totalProtein" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="120" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Label>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="1000" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+      <Label fx:id="totalCalories" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="1000" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -119,6 +118,16 @@
             <Font name="System Bold" size="18.0" />
          </font></Label>
       <ListView fx:id="foodListView" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="2" />
-      <Button mnemonicParsing="false" onAction="#removeButtonPressed" text="Remove Food" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <Button mnemonicParsing="false" onAction="#addButtonPressed" text="Add Food" />
+            <Button mnemonicParsing="false" onAction="#removeButtonPressed" text="Clear Day">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#fromListPressed" prefHeight="25.0" prefWidth="101.0" text="From List" GridPane.columnIndex="2" GridPane.rowIndex="3" GridPane.valignment="TOP" />
    </children>
 </GridPane>

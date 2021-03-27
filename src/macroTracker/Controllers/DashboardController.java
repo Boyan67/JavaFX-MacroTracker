@@ -1,16 +1,21 @@
 package macroTracker.Controllers;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import macroTracker.Classes.Food;
 import macroTracker.Classes.FoodDiary;
 
-import java.sql.SQLException;
+import java.io.IOException;
 
 public class DashboardController {
     FoodDiary foodDiary = new FoodDiary(1);
@@ -18,21 +23,26 @@ public class DashboardController {
     ListView<GridPane> foodListView;
     @FXML
     Label lblDay;
+    @FXML
+    Label totalCarbs;
+    @FXML
+    Label totalFats;
+    @FXML
+    Label totalProtein;
+    @FXML
+    Label totalCalories;
 
 
     // ========== Initial Function ==========
     public void initialize(){
-        clearView();
-        fillDiary();
+        showTable();
     }
 
     // ========== Button Functions ==========
-    public void addButtonPressed() throws SQLException {
-        Food food = new Food("bob", 0, 0, 0, 600);
+    public void addButtonPressed() {
+        Food food = new Food("bob", 5, 10, 15, 600);
         foodDiary.addFood(food);
-        FoodGrid foodGrid = new FoodGrid(food);
-        foodListView.getItems().add(foodGrid.createFoodGrid());
-        System.out.println(foodDiary.getTotalCalories());
+        showTable();
     }
 
     public void removeButtonPressed() {
@@ -43,8 +53,7 @@ public class DashboardController {
     public void nextButtonPressed(){
         if (foodDiary.getId() !=7){
             foodDiary.changeDiary(foodDiary.getId()+1);
-            clearView();
-            fillDiary();
+            showTable();
             lblDay.setText("Day " + foodDiary.getId());
         }else{
             System.out.println("You reached 7");
@@ -54,14 +63,30 @@ public class DashboardController {
     public void prevButtonPressed(){
         if (foodDiary.getId() !=1){
             foodDiary.changeDiary(foodDiary.getId()-1);
-            clearView();
-            fillDiary();
+            showTable();
             lblDay.setText("Day " + foodDiary.getId());
         }else{
             System.out.println("You reached 0");
         }
     }
 
+    public void fromListPressed(javafx.event.ActionEvent event){
+
+        Parent HomeParent;
+        try {
+            HomeParent = FXMLLoader.load(getClass().getResource("savedFoodsPage.fxml"));
+            Scene HomeScene = new Scene(HomeParent,750,500);
+
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(HomeScene);
+            window.show();
+        } catch (IOException e) {
+            System.out.println("SignUp Button Error: ");
+            e.printStackTrace();
+        }
+
+
+    }
 
     // ========== Functionality ==========
     public void fillDiary(){
@@ -79,20 +104,31 @@ public class DashboardController {
     public void showTable(){
         clearView();
         fillDiary();
+        updateMacros();
+    }
+    public void updateMacros(){
+        totalCarbs.setText(Integer.toString(foodDiary.getTotalCarbs()));
+        totalFats.setText(Integer.toString(foodDiary.getTotalFats()));
+        totalProtein.setText(Integer.toString(foodDiary.getTotalProtein()));
+        totalCalories.setText(Integer.toString(foodDiary.getTotalCalories()));
     }
 
     // ========== FoodGrid Class ==========
     class FoodGrid {
-        private Label name, carbs, fats, protein, calories;
-        private GridPane grid = new GridPane();
-        private Button btn;
+        private final Label name;
+        private final Label carbs;
+        private final Label fats;
+        private final Label protein;
+        private final Label calories;
+        private final GridPane grid = new GridPane();
+        private final Button btn;
 
 
         FoodGrid(Food food){
             name = new Label(food.getName());
-            carbs = new Label(" - ");
-            fats = new Label(" - ");
-            protein = new Label(" - ");
+            carbs = new Label(Integer.toString(food.getCarbs()));
+            fats = new Label(Integer.toString(food.getFats()));
+            protein = new Label(Integer.toString(food.getProtein()));
             calories = new Label(Integer.toString(food.getCalories()));
             btn = new Button("Delete");
             btn.setOnAction(event -> removeSelectedFood(food.getId()));

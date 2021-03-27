@@ -11,7 +11,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Controllers/home.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Controllers/dashboardPage.fxml"));
 
         primaryStage.setTitle("Macro Tracker");
 
