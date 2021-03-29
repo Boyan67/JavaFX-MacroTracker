@@ -1,4 +1,5 @@
 package macroTracker.Classes;
+
 public class Food {
 
     int id;
@@ -24,7 +25,6 @@ public class Food {
         this.calories = calories;
     }
 
-
     public Food(int id, String name, int carbs, int fats, int protein, int calories) {
         this.name = name;
         this.carbs = carbs;
@@ -38,6 +38,7 @@ public class Food {
     public String toString() {
         return "name: " + name + ", calories: " + calories;
     }
+
 
     public int getId() {
         return id;

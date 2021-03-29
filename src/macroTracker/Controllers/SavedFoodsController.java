@@ -1,110 +1,100 @@
 package macroTracker.Controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import macroTracker.Classes.Food;
 import macroTracker.Database.Database;
 
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class SavedFoodsController {
 
-    @FXML
-    ListView<GridPane> savedFoodListView;
-
     Database database = new Database("food_list");
+    private int diaryID;
+
+    @FXML
+    TableView<Food> savedFoodsTable;
+
+    @FXML
+    public TableColumn<Food, Integer> ID;
+    @FXML
+    public TableColumn<Food, String> name;
+    @FXML
+    public TableColumn<Food, Integer> carbs;
+    public TableColumn<Food, Integer> fats;
+    public TableColumn<Food, Integer> protein;
+    public TableColumn<Food, Integer> calories;
+
+
+    public void addSelectedFoodsPressed(javafx.event.ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboardPage.fxml"));
+            Parent root = loader.load();
+
+            DashboardController controller2 = loader.getController();
+            controller2.setIdsToAdd((getSelectedFoods()));
+
+            controller2.addSelectedFoods(diaryID);
+
+            Scene HomeScene = new Scene(root,750,500);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(HomeScene);
+            window.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void initialize(){
+        ID.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        name.setCellValueFactory(new PropertyValueFactory<>("Name"));
+        carbs.setCellValueFactory(new PropertyValueFactory<>("Carbs"));
+        fats.setCellValueFactory(new PropertyValueFactory<>("Fats"));
+        protein.setCellValueFactory(new PropertyValueFactory<>("Protein"));
+        calories.setCellValueFactory(new PropertyValueFactory<>("Calories"));
+        savedFoodsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         showTable();
     }
 
     public void fillDiary(){
-        FoodGrid foodGrid;
-        for (Food food : database.getAllFoods()) {
-            foodGrid = new FoodGrid(food);
-            savedFoodListView.getItems().add(foodGrid.createFoodGrid());
-        }
+        ObservableList<Food> foodObservableList = FXCollections.observableArrayList();
+        foodObservableList.addAll(database.getAllFoods());
+        savedFoodsTable.setItems(foodObservableList);
     }
-    public void clearView(){
-        if (savedFoodListView.getItems().size() > 0) {
-            savedFoodListView.getItems().subList(0, savedFoodListView.getItems().size()).clear();
-        }
+
+    public void clearView() {
+        savedFoodsTable.getItems().removeAll();
     }
+
     public void showTable(){
         clearView();
         fillDiary();
     }
 
-    public void addSelectedPressed(){
+    public ArrayList<Integer> getSelectedFoods(){
+        ArrayList<Integer> indexes = new ArrayList<>();
 
-        System.out.println(savedFoodListView.getSelectionModel().getSelectedItem().getId());
-
+        for (Food food : savedFoodsTable.getSelectionModel().getSelectedItems()){
+            indexes.add(food.getId());
+        }
+        return indexes;
     }
 
-    class FoodGrid {
-        private final Label name;
-        private final Label carbs;
-        private final Label fats;
-        private final Label protein;
-        private final Label calories;
-        private final GridPane grid = new GridPane();
-        private final Button btn;
-        private final int foodID;
-
-
-        FoodGrid(Food food ){
-            name = new Label(food.getName());
-            carbs = new Label(Integer.toString(food.getCarbs()));
-            fats = new Label(Integer.toString(food.getFats()));
-            protein = new Label(Integer.toString(food.getProtein()));
-            calories = new Label(Integer.toString(food.getCalories()));
-            btn = new Button("Delete");
-            btn.setOnAction(event -> removeSelectedFood(food.getId()));
-            foodID = food.getId();
-        }
-
-        public void removeSelectedFood(int id){
-            database.deleteFood(id);
-            showTable();
-        }
-
-        public GridPane createFoodGrid(){
-            ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(40);
-            ColumnConstraints col2 = new ColumnConstraints();
-            col2.setPercentWidth(15);
-            col2.setHalignment(HPos.CENTER);
-            ColumnConstraints col3 = new ColumnConstraints();
-            col3.setPercentWidth(15);
-            col3.setHalignment(HPos.CENTER);
-            ColumnConstraints col4 = new ColumnConstraints();
-            col4.setPercentWidth(15);
-            col4.setHalignment(HPos.CENTER);
-            ColumnConstraints col5 = new ColumnConstraints();
-            col5.setPercentWidth(15);
-            col5.setHalignment(HPos.CENTER);
-            ColumnConstraints col6 = new ColumnConstraints();
-            col6.setPercentWidth(15);
-
-            grid.getColumnConstraints().addAll(col1,col2,col3, col4, col5, col6);
-
-            grid.add(name, 0, 0, 1, 1);
-            grid.add(carbs, 1, 0, 1, 1);
-            grid.add(fats, 2, 0, 1, 1);
-            grid.add(protein, 3, 0, 1, 1);
-            grid.add(calories, 4, 0, 1, 1);
-            grid.add(btn, 5, 0, 1, 1);
-
-            return grid;
-        }
-
-        public int getFoodID() {
-            return foodID;
-        }
+    public void setDiaryID(int diaryID) {
+        this.diaryID = diaryID;
     }
-
 
 }

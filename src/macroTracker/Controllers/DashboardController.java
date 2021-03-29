@@ -16,8 +16,10 @@ import macroTracker.Classes.Food;
 import macroTracker.Classes.FoodDiary;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class DashboardController {
+    private ArrayList<Integer> idsToAdd;
     FoodDiary foodDiary = new FoodDiary(1);
     @FXML
     ListView<GridPane> foodListView;
@@ -70,25 +72,26 @@ public class DashboardController {
         }
     }
 
-    public void fromListPressed(javafx.event.ActionEvent event){
-
-        Parent HomeParent;
+    public void fromListPressed(javafx.event.ActionEvent event) {
         try {
-            HomeParent = FXMLLoader.load(getClass().getResource("savedFoodsPage.fxml"));
-            Scene HomeScene = new Scene(HomeParent,750,500);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("savedFoodsPage.fxml"));
+            Parent root = loader.load();
 
+            //The following both lines are the only addition we need to pass the arguments
+            SavedFoodsController savedFoodsController = loader.getController();
+            savedFoodsController.setDiaryID(foodDiary.getId());
+
+            Scene HomeScene = new Scene(root,750,500);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(HomeScene);
             window.show();
         } catch (IOException e) {
-            System.out.println("SignUp Button Error: ");
+            System.out.println("fromListPressed Button Error: ");
             e.printStackTrace();
         }
-
-
     }
 
-    // ========== Functionality ==========
+    // ========== FoodGrid Class ==========
     public void fillDiary(){
         FoodGrid foodGrid;
         for (Food food : foodDiary.getEveryFood()) {
@@ -112,8 +115,16 @@ public class DashboardController {
         totalProtein.setText(Integer.toString(foodDiary.getTotalProtein()));
         totalCalories.setText(Integer.toString(foodDiary.getTotalCalories()));
     }
+    public void setIdsToAdd(ArrayList<Integer> idsToAdd){
+        this.idsToAdd = idsToAdd;
+    }
+    public void addSelectedFoods(int diaryID){
+        foodDiary.changeDiary(diaryID);
+        lblDay.setText("Day " + foodDiary.getId());
+        foodDiary.addSelectedFoods(idsToAdd);
+        showTable();
+    }
 
-    // ========== FoodGrid Class ==========
     class FoodGrid {
         private final Label name;
         private final Label carbs;
@@ -169,8 +180,6 @@ public class DashboardController {
             return grid;
         }
     }
-
-
 }
 
 

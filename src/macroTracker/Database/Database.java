@@ -118,6 +118,41 @@ public class Database {
         }
     }
 
+    public void insertSelected(ArrayList<Integer> ids) {
+        try {
+            for (int i : ids) {
+                Statement selectStatement;
+                ResultSet rs;
+                String sql = "SELECT * FROM macro_tracker.food_list WHERE id = " + i;
+                selectStatement = connection.createStatement();
+                rs = selectStatement.executeQuery(sql);
+                Food foodToAdd = createFoodNoId(rs);
+                insertFood(foodToAdd);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public Food createFoodNoId(ResultSet resultSet) {
+        Food food = new Food();
+        try {
+            resultSet.next();
+            String name = resultSet.getString("name");
+            int carbs = resultSet.getInt("carbs");
+            int fats = resultSet.getInt("fats");
+            int protein = resultSet.getInt("protein");
+            int calories = resultSet.getInt("calories");
+            food = new Food(name, carbs, fats, protein, calories);
+            return food;
+        } catch (SQLException throwables) {
+            System.out.println("getFoodList() error: ");
+            throwables.printStackTrace();
+        }
+        return food;
+    }
+
     public ArrayList<Food> search(String searchTerm){
         String query = "SELECT * FROM " +databaseName+ " WHERE name LIKE '%" + searchTerm + "%'";
         try (

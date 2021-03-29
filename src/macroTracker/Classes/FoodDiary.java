@@ -38,6 +38,11 @@ public class FoodDiary {
         calculateMacros();
     }
 
+    public void addSelectedFoods(ArrayList<Integer> ids) {
+        database.insertSelected(ids);
+        calculateMacros();
+    }
+
     public void removeFood(int id){
         database.deleteFood(id);
         calculateMacros();
