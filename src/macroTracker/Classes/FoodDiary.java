@@ -33,10 +33,6 @@ public class FoodDiary {
         return database.getAllFoods();
     }
 
-    public void addFood(Food food) {
-        database.insertFood(food);
-        calculateMacros();
-    }
 
     public void addSelectedFoods(ArrayList<Integer> ids) {
         database.insertSelected(ids);
@@ -46,14 +42,6 @@ public class FoodDiary {
     public void removeFood(int id){
         database.deleteFood(id);
         calculateMacros();
-    }
-
-
-    public void searchFoods(String search){
-        ArrayList<Food> foundFoods = database.search(search);
-        for (Food food: foundFoods){
-            System.out.println(food);
-        }
     }
 
     public void calculateMacros(){

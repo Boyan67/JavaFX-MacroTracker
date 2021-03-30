@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Database {
 
     Connection connection;
-    String databaseName;
+    final String databaseName;
 
     public Database(String databaseName){
         this.databaseName = databaseName;

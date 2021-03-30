@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class DashboardController {
     private ArrayList<Integer> idsToAdd;
-    FoodDiary foodDiary = new FoodDiary(1);
+    final FoodDiary foodDiary = new FoodDiary(1);
     @FXML
     ListView<GridPane> foodListView;
     @FXML
@@ -41,11 +41,6 @@ public class DashboardController {
     }
 
     // ========== Button Functions ==========
-    public void addButtonPressed() {
-        Food food = new Food("bob", 5, 10, 15, 600);
-        foodDiary.addFood(food);
-        showTable();
-    }
 
     public void removeButtonPressed() {
         foodDiary.clearDiary();
@@ -72,7 +67,7 @@ public class DashboardController {
         }
     }
 
-    public void fromListPressed(javafx.event.ActionEvent event) {
+    public void addFoodPressed(javafx.event.ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("savedFoodsPage.fxml"));
             Parent root = loader.load();
@@ -81,7 +76,7 @@ public class DashboardController {
             SavedFoodsController savedFoodsController = loader.getController();
             savedFoodsController.setDiaryID(foodDiary.getId());
 
-            Scene HomeScene = new Scene(root,750,500);
+            Scene HomeScene = new Scene(root,810,500);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
             window.setScene(HomeScene);
             window.show();
@@ -152,21 +147,22 @@ public class DashboardController {
 
         public GridPane createFoodGrid(){
             ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(40);
+            col1.setPercentWidth(38);
             ColumnConstraints col2 = new ColumnConstraints();
-            col2.setPercentWidth(15);
+            col2.setPercentWidth(14);
             col2.setHalignment(HPos.CENTER);
             ColumnConstraints col3 = new ColumnConstraints();
-            col3.setPercentWidth(15);
+            col3.setPercentWidth(14);
             col3.setHalignment(HPos.CENTER);
             ColumnConstraints col4 = new ColumnConstraints();
-            col4.setPercentWidth(15);
+            col4.setPercentWidth(13);
             col4.setHalignment(HPos.CENTER);
             ColumnConstraints col5 = new ColumnConstraints();
-            col5.setPercentWidth(15);
+            col5.setPercentWidth(12);
             col5.setHalignment(HPos.CENTER);
             ColumnConstraints col6 = new ColumnConstraints();
-            col6.setPercentWidth(15);
+            col6.setPercentWidth(12);
+            col6.setHalignment(HPos.CENTER);
 
             grid.getColumnConstraints().addAll(col1,col2,col3, col4, col5, col6);
 
