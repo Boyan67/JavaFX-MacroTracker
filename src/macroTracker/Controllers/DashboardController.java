@@ -22,17 +22,17 @@ public class DashboardController {
     private ArrayList<Integer> idsToAdd;
     final FoodDiary foodDiary = new FoodDiary(1);
     @FXML
-    ListView<GridPane> foodListView;
+    private ListView<GridPane> foodListView;
     @FXML
-    Label lblDay;
+    private Label lblDay;
     @FXML
-    Label totalCarbs;
+    private Label totalCarbs;
     @FXML
-    Label totalFats;
+    private Label totalFats;
     @FXML
-    Label totalProtein;
+    private Label totalProtein;
     @FXML
-    Label totalCalories;
+    private Label totalCalories;
 
 
     // ========== Initial Function ==========
@@ -41,7 +41,6 @@ public class DashboardController {
     }
 
     // ========== Button Functions ==========
-
     public void removeButtonPressed() {
         foodDiary.clearDiary();
         showTable();
@@ -81,12 +80,12 @@ public class DashboardController {
             window.setScene(HomeScene);
             window.show();
         } catch (IOException e) {
-            System.out.println("fromListPressed Button Error: ");
+            System.out.println("addFood Button Error: ");
             e.printStackTrace();
         }
     }
 
-    // ========== FoodGrid Class ==========
+    // ========== Functionality ==========
     public void fillDiary(){
         FoodGrid foodGrid;
         for (Food food : foodDiary.getEveryFood()) {
@@ -120,6 +119,7 @@ public class DashboardController {
         showTable();
     }
 
+    // ========== FoodGrid Class ==========
     class FoodGrid {
         private final Label name;
         private final Label carbs;

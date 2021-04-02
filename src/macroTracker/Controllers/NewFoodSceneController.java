@@ -5,11 +5,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import macroTracker.Classes.Food;
 import macroTracker.Database.Database;
 
-import javafx.scene.control.TextField;
 import java.io.IOException;
 
 public class NewFoodSceneController {
@@ -18,16 +21,36 @@ public class NewFoodSceneController {
     private int diaryID;
 
     @FXML
-    TextField textfieldName;
+    private TextField textFieldName;
     @FXML
-    TextField fieldCarbs;
+    private TextField fieldCarbs;
     @FXML
-    TextField fieldFats;
+    private TextField fieldFats;
     @FXML
-    TextField fieldProtein;
+    private TextField fieldProtein;
     @FXML
-    TextField fieldCalories;
+    private TextField fieldCalories;
+    @FXML
+    private Label nameError;
+    @FXML
+    private Label carbsError;
+    @FXML
+    private Label fatsError;
+    @FXML
+    private Label proteinError;
+    @FXML
+    private Label caloriesError;
+    @FXML
+    private ChoiceBox<String> choiceCategory;
+    @FXML
+    private TextArea txtAreaIngredients;
 
+    // ========== Class Specific ==========
+    public void initialize(){
+        choiceCategory.getItems().add("Breakfast");
+        choiceCategory.getItems().add("Lunch/Dinner");
+        choiceCategory.getItems().add("Snacks");
+    }
     public void setDiaryID(int diaryID) {
         this.diaryID = diaryID;
     }
@@ -35,11 +58,20 @@ public class NewFoodSceneController {
         return diaryID;
     }
 
+    // ========== Button Function ==========
     public void createFoodPressed(javafx.event.ActionEvent event){
-        createNewFood();
+        if (validation()){
+            createNewFood();
+            backToFoodList(event);
+        }
+    }
+
+    public void cancelPressed(javafx.event.ActionEvent event){
         backToFoodList(event);
     }
 
+
+    // ========== Functionality ==========
     public void backToFoodList(javafx.event.ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("savedFoodsPage.fxml"));
@@ -59,14 +91,67 @@ public class NewFoodSceneController {
     }
 
     public void createNewFood(){
-        String name = textfieldName.getText().trim();
+        String name = textFieldName.getText().trim();
         int carbs = Integer.parseInt(fieldCarbs.getText());
         int fats = Integer.parseInt(fieldFats.getText());
         int protein = Integer.parseInt(fieldProtein.getText());
         int calories = Integer.parseInt(fieldCalories.getText());
+        String category = String.valueOf(choiceCategory.getSelectionModel().getSelectedItem());
+        String ingredients = txtAreaIngredients.getText();
 
-        Food food = new Food(name, carbs, fats, protein, calories);
+        Food food = new Food(name, carbs, fats, protein, calories, category, ingredients);
         database.insertFood(food);
+    }
+
+    public boolean validation(){
+
+        if (isValidName() && isValidInt(fieldCarbs.getText()) &&
+            isValidInt(fieldFats.getText()) && isValidInt(fieldProtein.getText()) &&
+            isValidInt(fieldCalories.getText()))
+        {
+            return true;
+        }else{
+            if (isValidName()){
+                nameError.setText("");
+            }else{
+                nameError.setText("Enter a valid name");
+            }
+
+            if (isValidInt(fieldCarbs.getText())){
+                carbsError.setText("");
+            }else {
+                carbsError.setText("Enter valid value for carbs");
+            }
+
+            if (isValidInt(fieldFats.getText())) {
+                fatsError.setText("");
+            }else{
+                fatsError.setText("Enter valid value for fats");
+            }
+
+            if (isValidInt(fieldProtein.getText())) {
+                proteinError.setText("");
+            }else{
+                proteinError.setText("Enter valid value for protein");
+            }
+
+            if (isValidInt(fieldCalories.getText())) {
+                caloriesError.setText("");
+            }else{
+                caloriesError.setText("Enter valid value for calories");
+            }
+        }
+
+        return false;
 
     }
+
+    public boolean isValidName(){
+        return !textFieldName.getText().isEmpty();
+    }
+
+    public boolean isValidInt(String input){
+        return input.matches("[0-9]+") && input.length() > 0;
+    }
+
 }

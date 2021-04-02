@@ -1,18 +1,17 @@
 package macroTracker.Controllers;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import macroTracker.Classes.Food;
@@ -20,6 +19,7 @@ import macroTracker.Database.Database;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 public class SavedFoodsController {
 
@@ -33,15 +33,28 @@ public class SavedFoodsController {
     TableView<Food> savedFoodsTable;
 
     @FXML
-    public TableColumn<Food, Integer> ID;
+    private TableColumn<Food, Integer> ID;
     @FXML
-    public TableColumn<Food, String> name;
+    private TableColumn<Food, String> name;
     @FXML
-    public TableColumn<Food, Integer> carbs;
-    public TableColumn<Food, Integer> fats;
-    public TableColumn<Food, Integer> protein;
-    public TableColumn<Food, Integer> calories;
+    private TableColumn<Food, Integer> carbs;
+    @FXML
+    private TableColumn<Food, Integer> fats;
+    @FXML
+    private TableColumn<Food, Integer> protein;
+    @FXML
+    private TableColumn<Food, Integer> calories;
+    @FXML
+    private TableColumn<Food, String> category;
+    @FXML
+    private TableColumn<Food, String> ingredients;
 
+    @FXML
+    private ComboBox<String> pickCategory;
+    @FXML
+    private ComboBox<String> pickMacroFilter;
+
+    // ========== Class Specific ==========
     public void setDiaryID(int diaryID) {
         this.diaryID = diaryID;
     }
@@ -49,6 +62,7 @@ public class SavedFoodsController {
         return diaryID;
     }
 
+    // ========== Initial Function ==========
     public void initialize(){
         ID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         name.setCellValueFactory(new PropertyValueFactory<>("Name"));
@@ -56,57 +70,26 @@ public class SavedFoodsController {
         fats.setCellValueFactory(new PropertyValueFactory<>("Fats"));
         protein.setCellValueFactory(new PropertyValueFactory<>("Protein"));
         calories.setCellValueFactory(new PropertyValueFactory<>("Calories"));
+        category.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        ingredients.setCellValueFactory(new PropertyValueFactory<>("Ingredients"));
         savedFoodsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+        pickCategory.getItems().add("Breakfast");
+        pickCategory.getItems().add("Lunch/Dinner");
+        pickCategory.getItems().add("Snacks");
+        pickCategory.getItems().add("All");
+
+
+        pickMacroFilter.getItems().add("High Carbs");
+        pickMacroFilter.getItems().add("High Fats");
+        pickMacroFilter.getItems().add("High Protein");
+        pickMacroFilter.getItems().add("No Filter");
+
         showTable();
-        searchFoods();
+
     }
 
-    public void searchFoods(){
-        FilteredList<Food> filteredData = new FilteredList<>(foodObservableList, p -> true);
-        // 2. Set the filter Predicate whenever the filter changes.
-        filterField.textProperty().addListener((observable, oldValue, newValue) -> filteredData.setPredicate(food -> {
-            // If filter text is empty, display all persons.
-            if (newValue == null || newValue.isEmpty()) {
-                return true;
-            }
-            // Compare first name and last name of every person with filter text.
-            String lowerCaseFilter = newValue.toLowerCase();
-            return food.getName().toLowerCase().contains(lowerCaseFilter); // Filter matches first name.
-// Does not match.
-        }));
-        // 3. Wrap the FilteredList in a SortedList.
-        SortedList<Food> sortedData = new SortedList<>(filteredData);
-        // 4. Bind the SortedList comparator to the TableView comparator.
-        sortedData.comparatorProperty().bind(savedFoodsTable.comparatorProperty());
-        savedFoodsTable.setItems(sortedData);
-    }
-
-    public void fillDiary(){
-        foodObservableList.addAll(database.getAllFoods());
-        savedFoodsTable.setItems(foodObservableList);
-    }
-
-    public void clearView() {
-        savedFoodsTable.getItems().removeAll();
-    }
-
-    public void showTable(){
-        clearView();
-        fillDiary();
-    }
-
-    public ArrayList<Integer> getSelectedFoods(){
-        ArrayList<Integer> indexes = new ArrayList<>();
-
-        for (Food food : savedFoodsTable.getSelectionModel().getSelectedItems()){
-            indexes.add(food.getId());
-        }
-        return indexes;
-    }
-
-
-    // ========== Button Functionality ==========
+    // ========== Button Functions ==========
     public void addSelectedFoodsPressed(javafx.event.ActionEvent event){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboardPage.fxml"));
@@ -145,5 +128,76 @@ public class SavedFoodsController {
             e.printStackTrace();
         }
     }
+
+    public void deleteSelected(){
+        ArrayList<Integer> selectedIDs = getSelectedFoods();
+        for (int i : selectedIDs){
+            database.deleteFood(i);
+        }
+        showTable();
+    }
+
+
+    // ========== Functionality ==========
+    public void multipleFilters(){
+        ObjectProperty<Predicate<Food>> nameFilter = new SimpleObjectProperty<>();
+        ObjectProperty<Predicate<Food>> categoryFilter = new SimpleObjectProperty<>();
+        ObjectProperty<Predicate<Food>> macroFilter = new SimpleObjectProperty<>();
+
+        nameFilter.bind(Bindings.createObjectBinding(() ->
+                food -> food.getName().toLowerCase().contains(filterField.getText().toLowerCase()),
+                filterField.textProperty()));
+
+        categoryFilter.bind(Bindings.createObjectBinding(() ->
+                food -> pickCategory.getValue() == null || pickCategory.getValue().equals("All") ||
+                        pickCategory.getValue().equals(food.getCategory()),
+                pickCategory.valueProperty()));
+
+        macroFilter.bind(Bindings.createObjectBinding(() ->
+                food -> pickMacroFilter.getValue() == null || pickMacroFilter.getValue().equals("No Filter") ||
+                pickMacroFilter.getValue().equals("High Carbs")
+                        && ((float)food.getCarbs() / (food.getCarbs()+food.getFats()+food.getProtein())) > .4 ||
+                pickMacroFilter.getValue().equals("High Fats")
+                        && ((float)food.getFats() / (food.getCarbs()+food.getFats()+food.getProtein())) > .4 ||
+                pickMacroFilter.getValue().equals("High Protein")
+                        && ((float)food.getProtein() / (food.getCarbs()+food.getFats()+food.getProtein())) > .2,
+                pickMacroFilter.valueProperty()
+                ));
+
+
+        FilteredList<Food> filteredItems = new FilteredList<>(foodObservableList);
+        savedFoodsTable.setItems(filteredItems);
+
+        filteredItems.predicateProperty().bind(Bindings.createObjectBinding(
+                () -> nameFilter.get().and(categoryFilter.get()).and(macroFilter.get()),
+                nameFilter, categoryFilter, macroFilter));
+
+    }
+
+
+    public void fillDiary(){
+        foodObservableList.addAll(database.getAllFoods());
+        savedFoodsTable.setItems(foodObservableList);
+    }
+
+    public void clearView() {
+        foodObservableList.clear();
+    }
+
+    public void showTable(){
+        clearView();
+        fillDiary();
+        multipleFilters();
+    }
+
+    public ArrayList<Integer> getSelectedFoods(){
+        ArrayList<Integer> indexes = new ArrayList<>();
+
+        for (Food food : savedFoodsTable.getSelectionModel().getSelectedItems()){
+            indexes.add(food.getId());
+        }
+        return indexes;
+    }
+
 
 }

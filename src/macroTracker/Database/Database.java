@@ -22,8 +22,9 @@ public class Database {
         String password = "secret";
         try {
             connection = DriverManager.getConnection(url, user, password);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Creating Database error - Database(): ");
+            e.printStackTrace();
         }
     }
 
@@ -31,8 +32,8 @@ public class Database {
         if (connection != null){
             try {
                 connection.close();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -45,9 +46,9 @@ public class Database {
             statement = connection.createStatement();
             rs = statement.executeQuery(sql);
             return getFoodList(rs);
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             System.out.println("getAllFoods() error: ");
-            throwables.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
@@ -62,12 +63,14 @@ public class Database {
                 int fats = resultSet.getInt("fats");
                 int protein = resultSet.getInt("protein");
                 int calories = resultSet.getInt("calories");
-                Food food = new Food(id, name, carbs, fats, protein, calories);
+                String category = resultSet.getString("category");
+                String ingredients = resultSet.getString("ingredients");
+                Food food = new Food(id, name, carbs, fats, protein, calories, category, ingredients);
                 foodList.add(food);
         }
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             System.out.println("getFoodList() error: ");
-            throwables.printStackTrace();
+            e.printStackTrace();
         }
         return foodList;
     }
@@ -79,8 +82,11 @@ public class Database {
             int fats = food.getFats();
             int protein = food.getProtein();
             int calories = food.getCalories();
+            String category = food.getCategory();
+            String ingredients = food.getIngredients();
+
             Statement statement = connection.createStatement();
-            String values = String.format("( NULL,'%s',%d, %d, %d, %d)", name, carbs, fats, protein,  calories);
+            String values = String.format("( NULL,'%s',%d, %d, %d, %d, '%s', '%s')", name, carbs, fats, protein,  calories, category, ingredients);
             String sql = "INSERT INTO " + databaseName + " VALUES";
 
             statement.executeUpdate((sql + values), Statement.RETURN_GENERATED_KEYS);
@@ -88,9 +94,9 @@ public class Database {
             if (rs.next()) {
                 food.setId(rs.getInt(1));
             }
-            
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("insertFood() error: ");
+            e.printStackTrace();
         }
     }
 
@@ -99,10 +105,9 @@ public class Database {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM " + databaseName + " WHERE id = ?");
             statement.setInt(1, id);
             statement.executeUpdate();
-//            System.out.println(statement.toString());
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             System.out.println("deleteFood(Food food) error: ");
-            throwables.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -112,9 +117,9 @@ public class Database {
             statement.executeUpdate();
             PreparedStatement resetAutoIncrement = connection.prepareStatement("ALTER TABLE " + databaseName + " AUTO_INCREMENT = 1;");
             resetAutoIncrement.executeUpdate();
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             System.out.println("deleteAllFoods() error: ");
-            throwables.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -130,8 +135,8 @@ public class Database {
                 insertFood(foodToAdd);
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -144,26 +149,14 @@ public class Database {
             int fats = resultSet.getInt("fats");
             int protein = resultSet.getInt("protein");
             int calories = resultSet.getInt("calories");
-            food = new Food(name, carbs, fats, protein, calories);
+            String category = resultSet.getString("category");
+            String ingredients = resultSet.getString("ingredients");
+            food = new Food(name, carbs, fats, protein, calories, category, ingredients);
             return food;
-        } catch (SQLException throwables) {
+        } catch (SQLException e) {
             System.out.println("getFoodList() error: ");
-            throwables.printStackTrace();
+            e.printStackTrace();
         }
         return food;
-    }
-
-    public ArrayList<Food> search(String searchTerm){
-        String query = "SELECT * FROM " +databaseName+ " WHERE name LIKE '%" + searchTerm + "%'";
-        try (
-                Statement statement = connection.createStatement();
-                ResultSet resultSet = statement.executeQuery(query)
-        ){
-            return getFoodList(resultSet);
-        } catch (SQLException throwables) {
-            System.out.println("search() error: ");
-            throwables.printStackTrace();
-        }
-        return null;
     }
 }

@@ -24,12 +24,12 @@
             </HBox.margin>
          </Button>
          <Pane prefHeight="67.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
-         <ComboBox prefWidth="150.0" promptText="Pick Category">
+         <ComboBox fx:id="pickCategory" prefWidth="150.0" promptText="Pick Category">
             <HBox.margin>
                <Insets />
             </HBox.margin>
          </ComboBox>
-         <ComboBox prefHeight="25.0" prefWidth="150.0" promptText="Filter By">
+         <ComboBox fx:id="pickMacroFilter" prefHeight="25.0" prefWidth="150.0" promptText="Filter By">
             <HBox.margin>
                <Insets left="10.0" right="10.0" />
             </HBox.margin>
@@ -39,12 +39,14 @@
    <center>
       <TableView fx:id="savedFoodsTable" prefHeight="381.0" prefWidth="846.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="ID" prefWidth="32.0" style="-fx-alignment: CENTER" text="ID" />
-          <TableColumn fx:id="name" prefWidth="342.0" text="Name" />
-            <TableColumn fx:id="carbs" prefWidth="100.0" style="-fx-alignment: CENTER" text="Carbs" />
-            <TableColumn fx:id="fats" prefWidth="100.0" style="-fx-alignment: CENTER" text="Fats" />
-            <TableColumn fx:id="protein" prefWidth="100.0" style="-fx-alignment: CENTER" text="Protein" />
-            <TableColumn fx:id="calories" prefWidth="131.0" style="-fx-alignment: CENTER" text="Calories" />
+          <TableColumn fx:id="ID" prefWidth="30.0" style="-fx-alignment: CENTER" text="ID" />
+            <TableColumn fx:id="category" prefWidth="70.0" text="Category" />
+          <TableColumn fx:id="name" prefWidth="307.0" text="Name" />
+            <TableColumn fx:id="carbs" prefWidth="70.0" style="-fx-alignment: CENTER" text="Carbs" />
+            <TableColumn fx:id="fats" prefWidth="70.0" style="-fx-alignment: CENTER" text="Fats" />
+            <TableColumn fx:id="protein" prefWidth="70.0" style="-fx-alignment: CENTER" text="Protein" />
+            <TableColumn fx:id="calories" prefWidth="100.0" style="-fx-alignment: CENTER" text="Calories" />
+            <TableColumn fx:id="ingredients" prefWidth="88.0" text="Ingredients" />
         </columns>
       </TableView>
    </center>
@@ -53,6 +55,12 @@
          <Button mnemonicParsing="false" onAction="#addSelectedFoodsPressed" text="Add Selected">
             <HBox.margin>
                <Insets left="5.0" top="2.0" />
+            </HBox.margin>
+         </Button>
+         <Pane prefHeight="67.0" prefWidth="150.0" HBox.hgrow="ALWAYS" />
+         <Button mnemonicParsing="false" onAction="#deleteSelected" text="Delete Selected">
+            <HBox.margin>
+               <Insets right="5.0" top="2.0" />
             </HBox.margin>
          </Button>
       </HBox>

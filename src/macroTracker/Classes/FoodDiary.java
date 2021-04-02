@@ -17,7 +17,6 @@ public class FoodDiary {
         database = new Database("day"+day);
     }
 
-
     public FoodDiary(int id){
         this.id = id;
         database = new Database("day"+id);
@@ -32,7 +31,6 @@ public class FoodDiary {
         calculateMacros();
         return database.getAllFoods();
     }
-
 
     public void addSelectedFoods(ArrayList<Integer> ids) {
         database.insertSelected(ids);
