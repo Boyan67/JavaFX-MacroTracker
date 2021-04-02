@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -32,8 +33,7 @@ public class SavedFoodsController {
     @FXML
     TableView<Food> savedFoodsTable;
 
-    @FXML
-    private TableColumn<Food, Integer> ID;
+
     @FXML
     private TableColumn<Food, String> name;
     @FXML
@@ -64,7 +64,6 @@ public class SavedFoodsController {
 
     // ========== Initial Function ==========
     public void initialize(){
-        ID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         name.setCellValueFactory(new PropertyValueFactory<>("Name"));
         carbs.setCellValueFactory(new PropertyValueFactory<>("Carbs"));
         fats.setCellValueFactory(new PropertyValueFactory<>("Fats"));
@@ -140,6 +139,7 @@ public class SavedFoodsController {
 
     // ========== Functionality ==========
     public void multipleFilters(){
+        foodObservableList.addAll(database.getAllFoods());
         ObjectProperty<Predicate<Food>> nameFilter = new SimpleObjectProperty<>();
         ObjectProperty<Predicate<Food>> categoryFilter = new SimpleObjectProperty<>();
         ObjectProperty<Predicate<Food>> macroFilter = new SimpleObjectProperty<>();
@@ -166,18 +166,15 @@ public class SavedFoodsController {
 
 
         FilteredList<Food> filteredItems = new FilteredList<>(foodObservableList);
-        savedFoodsTable.setItems(filteredItems);
 
         filteredItems.predicateProperty().bind(Bindings.createObjectBinding(
                 () -> nameFilter.get().and(categoryFilter.get()).and(macroFilter.get()),
                 nameFilter, categoryFilter, macroFilter));
 
-    }
+        SortedList<Food> sortableData = new SortedList<>(filteredItems);
+        savedFoodsTable.setItems(sortableData);
+        sortableData.comparatorProperty().bind(savedFoodsTable.comparatorProperty());
 
-
-    public void fillDiary(){
-        foodObservableList.addAll(database.getAllFoods());
-        savedFoodsTable.setItems(foodObservableList);
     }
 
     public void clearView() {
@@ -186,7 +183,6 @@ public class SavedFoodsController {
 
     public void showTable(){
         clearView();
-        fillDiary();
         multipleFilters();
     }
 

@@ -1,16 +1,21 @@
 package macroTracker.Controllers;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import macroTracker.Classes.Food;
 import macroTracker.Classes.FoodDiary;
@@ -121,6 +126,9 @@ public class DashboardController {
 
     // ========== FoodGrid Class ==========
     class FoodGrid {
+        private final Pane category;
+        private final String categoryName;
+        private final String ingredientList;
         private final Label name;
         private final Label carbs;
         private final Label fats;
@@ -130,7 +138,24 @@ public class DashboardController {
         private final Button btn;
 
 
+        public String  determineColor(Food food){
+            String colorVal = "#333";
+            colorVal = switch (food.getCategory()) {
+                case "Lunch/Dinner" -> "#0837d1";
+                case "Breakfast" -> "#34eb83";
+                case "Snacks" -> "#7008d1";
+                default -> colorVal;
+            };
+
+            return colorVal;
+        }
+
         FoodGrid(Food food){
+            category = new VBox();
+            Pane a = new Pane();
+            a.setStyle("-fx-background-color: " + determineColor(food));
+            a.setPadding(new Insets(10, 0, 10, 0));
+            category.getChildren().add(a);
             name = new Label(food.getName());
             carbs = new Label(Integer.toString(food.getCarbs()));
             fats = new Label(Integer.toString(food.getFats()));
@@ -138,6 +163,9 @@ public class DashboardController {
             calories = new Label(Integer.toString(food.getCalories()));
             btn = new Button("Delete");
             btn.setOnAction(event -> removeSelectedFood(food.getId()));
+            categoryName = food.getCategory();
+
+            ingredientList = food.getIngredients();
         }
 
         public void removeSelectedFood(int id){
@@ -146,8 +174,11 @@ public class DashboardController {
         }
 
         public GridPane createFoodGrid(){
+            ColumnConstraints col0 = new ColumnConstraints();
+            col0.setPrefWidth(10);
+            category.setPadding(new Insets(2, 5, 0, 0));
             ColumnConstraints col1 = new ColumnConstraints();
-            col1.setPercentWidth(38);
+            col1.setPercentWidth(37);
             ColumnConstraints col2 = new ColumnConstraints();
             col2.setPercentWidth(14);
             col2.setHalignment(HPos.CENTER);
@@ -164,18 +195,53 @@ public class DashboardController {
             col6.setPercentWidth(12);
             col6.setHalignment(HPos.CENTER);
 
-            grid.getColumnConstraints().addAll(col1,col2,col3, col4, col5, col6);
+            grid.getColumnConstraints().addAll(col0, col1,col2,col3, col4, col5, col6);
 
-            grid.add(name, 0, 0, 1, 1);
-            grid.add(carbs, 1, 0, 1, 1);
-            grid.add(fats, 2, 0, 1, 1);
-            grid.add(protein, 3, 0, 1, 1);
-            grid.add(calories, 4, 0, 1, 1);
-            grid.add(btn, 5, 0, 1, 1);
+            grid.add(category, 0, 0, 1, 1);
+            grid.add(name, 1, 0, 1, 1);
+            grid.add(carbs, 2, 0, 1, 1);
+            grid.add(fats, 3, 0, 1, 1);
+            grid.add(protein, 4, 0, 1, 1);
+            grid.add(calories, 5, 0, 1, 1);
+            grid.add(btn, 6, 0, 1, 1);
+
+
+            grid.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
 
             return grid;
         }
+
+        EventHandler<MouseEvent> eventHandler = new EventHandler<>() {
+            @Override
+            public void handle(MouseEvent e) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("foodDetailsPage.fxml"));
+                    Parent root = loader.load();
+
+                    FoodDetailsController foodDetailsController = loader.getController();
+                    foodDetailsController.setLblName(name.getText());
+                    foodDetailsController.setLblCategory(categoryName);
+                    foodDetailsController.setLblCarbs(carbs.getText());
+                    foodDetailsController.setLblFats(fats.getText());
+                    foodDetailsController.setLblProtein(protein.getText());
+                    foodDetailsController.setLblCalories(calories.getText());
+                    foodDetailsController.setLblIngredients(ingredientList);
+
+                    Scene HomeScene = new Scene(root,400,500);
+                    Stage window = new Stage();
+                    window.setScene(HomeScene);
+                    window.showAndWait();
+                } catch (IOException ioException) {
+                    System.out.println("Creating Food Details Window error: ");
+                    ioException.printStackTrace();
+                }
+
+            }
+        };
+
+
     }
+
 }
 
 

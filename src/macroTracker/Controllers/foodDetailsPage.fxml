@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0"
+          prefWidth="400.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="macroTracker.Controllers.FoodDetailsController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="133.0"/>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="133.0"/>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="133.0"/>
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="269.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="269.0" minHeight="0.0" prefHeight="16.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="373.0" minHeight="0.0" prefHeight="24.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="281.0" minHeight="10.0" prefHeight="61.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="281.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="292.0" minHeight="10.0" prefHeight="235.0" vgrow="SOMETIMES"/>
+   </rowConstraints>
+   <Label fx:id="lblName" text="Food Details" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER">
+      <font>
+         <Font name="System Bold" size="24.0"/>
+      </font>
+   </Label>
+   <Label text="Carbs" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+   <Label fx:id="lblCarbs" text="100" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+         <Font name="Arial Bold" size="18.0"/>
+      </font>
+   </Label>
+   <Label text="Fats" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+   <Label fx:id="lblFats" text="100" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+         <Font name="Arial Bold" size="18.0"/>
+      </font>
+   </Label>
+   <Label text="Protein" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+   <Label fx:id="lblProtein" text="100" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+      <font>
+         <Font name="Arial Bold" size="18.0"/>
+      </font>
+   </Label>
+   <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647"
+         GridPane.rowIndex="1">
+      <Label text="Category:">
+         <font>
+            <Font size="18.0"/>
+         </font>
+         <HBox.margin>
+            <Insets left="5.0" right="5.0"/>
+         </HBox.margin>
+      </Label>
+      <Label fx:id="lblCategory" text="Breakast">
+         <font>
+            <Font name="System Bold" size="18.0"/>
+         </font>
+         <HBox.margin>
+            <Insets left="5.0" right="5.0"/>
+         </HBox.margin>
+      </Label>
+   </HBox>
+   <Label text="Ingredients" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5"
+          GridPane.valignment="BOTTOM">
+      <font>
+         <Font size="18.0"/>
+      </font>
+   </Label>
+   <Label fx:id="lblIngredients" maxWidth="-Infinity" prefWidth="250.0" text="◙ Fobes                        "
+          wrapText="true" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="6"
+          GridPane.valignment="TOP">
+      <font>
+         <Font size="15.0"/>
+      </font>
+   </Label>
+   <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <Label text="Calories">
+         <font>
+            <Font size="18.0"/>
+         </font>
+         <VBox.margin>
+            <Insets top="5.0"/>
+         </VBox.margin>
+      </Label>
+      <Label fx:id="lblCalories" text="250">
+         <font>
+            <Font name="System Bold" size="24.0"/>
+         </font>
+         <VBox.margin>
+            <Insets top="-5.0"/>
+         </VBox.margin>
+      </Label>
+   </VBox>
+</GridPane>

@@ -39,14 +39,13 @@
    <center>
       <TableView fx:id="savedFoodsTable" prefHeight="381.0" prefWidth="846.0" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn fx:id="ID" prefWidth="30.0" style="-fx-alignment: CENTER" text="ID" />
             <TableColumn fx:id="category" prefWidth="70.0" text="Category" />
           <TableColumn fx:id="name" prefWidth="307.0" text="Name" />
             <TableColumn fx:id="carbs" prefWidth="70.0" style="-fx-alignment: CENTER" text="Carbs" />
             <TableColumn fx:id="fats" prefWidth="70.0" style="-fx-alignment: CENTER" text="Fats" />
             <TableColumn fx:id="protein" prefWidth="70.0" style="-fx-alignment: CENTER" text="Protein" />
             <TableColumn fx:id="calories" prefWidth="100.0" style="-fx-alignment: CENTER" text="Calories" />
-            <TableColumn fx:id="ingredients" prefWidth="88.0" text="Ingredients" />
+            <TableColumn fx:id="ingredients" prefWidth="118.0" text="Ingredients" />
         </columns>
       </TableView>
    </center>
