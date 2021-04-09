@@ -73,6 +73,16 @@ public class SavedFoodsController {
         ingredients.setCellValueFactory(new PropertyValueFactory<>("Ingredients"));
         savedFoodsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
+
+        category.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.1));
+        name.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.35));
+        carbs.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.05));
+        fats.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.05));
+        protein.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.05));
+        calories.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.1));
+        ingredients.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.298));
+
+
         pickCategory.getItems().add("Breakfast");
         pickCategory.getItems().add("Lunch/Dinner");
         pickCategory.getItems().add("Snacks");
@@ -101,6 +111,7 @@ public class SavedFoodsController {
 
             Scene HomeScene = new Scene(root,750,500);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            //window.setMaximized(true);
             window.setScene(HomeScene);
             window.show();
 
@@ -119,9 +130,11 @@ public class SavedFoodsController {
             newFoodSceneController.setDiaryID(getDiaryID());
 
             Scene HomeScene = new Scene(root,500,500);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Stage window = new Stage();
+
             window.setScene(HomeScene);
-            window.show();
+            window.showAndWait();
+            showTable();
 
         } catch (IOException e) {
             e.printStackTrace();

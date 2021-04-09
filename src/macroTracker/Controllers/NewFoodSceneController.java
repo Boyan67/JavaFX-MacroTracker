@@ -1,19 +1,10 @@
 package macroTracker.Controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import macroTracker.Classes.Food;
 import macroTracker.Database.Database;
-
-import java.io.IOException;
 
 public class NewFoodSceneController {
 
@@ -62,34 +53,16 @@ public class NewFoodSceneController {
     public void createFoodPressed(javafx.event.ActionEvent event){
         if (validation()){
             createNewFood();
-            backToFoodList(event);
+            ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
         }
     }
 
     public void cancelPressed(javafx.event.ActionEvent event){
-        backToFoodList(event);
+        ((Stage)(((Button)event.getSource()).getScene().getWindow())).close();
     }
 
 
     // ========== Functionality ==========
-    public void backToFoodList(javafx.event.ActionEvent event){
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("savedFoodsPage.fxml"));
-            Parent root = loader.load();
-
-            SavedFoodsController savedFoodsController = loader.getController();
-            savedFoodsController.setDiaryID(getDiaryID());
-
-            Scene FoodListScene = new Scene(root,810,500);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-            window.setScene(FoodListScene);
-            window.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public void createNewFood(){
         String name = textFieldName.getText().trim();
         int carbs = Integer.parseInt(fieldCarbs.getText());

@@ -55,7 +55,7 @@ public class FoodDetailsController {
             newString.append("◙ ").append(i.trim()).append("\n");
         }
 
-        lblIngredients.setStyle("-fx-border-color: #333;");
+        lblIngredients.setStyle("-fx-border-color: #eee;");
         lblIngredients.setPadding(new Insets(5));
         lblIngredients.setText(newString.toString());
     }

@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -12,144 +14,173 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0"
-          prefWidth="751.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="macroTracker.Controllers.DashboardController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1200.0" style="-fx-background-color: #383838;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="macroTracker.Controllers.DashboardController">
    <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" percentWidth="25.0" prefWidth="180.0"/>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" percentWidth="30.0" prefWidth="250.0"/>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0"/>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0"/>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0"/>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="10.0" prefWidth="50.0"/>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="10.0" prefWidth="50.0"/>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" percentWidth="25.0" prefWidth="180.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="472.0" minWidth="10.0" percentWidth="30.0" prefWidth="250.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="95.0" minWidth="10.0" percentWidth="10.0" prefWidth="50.0" />
    </columnConstraints>
    <rowConstraints>
-      <RowConstraints maxHeight="100.0" minHeight="9.0" prefHeight="60.0" vgrow="SOMETIMES"/>
-      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
-      <RowConstraints minHeight="10.0" prefHeight="299.0" vgrow="SOMETIMES"/>
-      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
-      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES"/>
+      <RowConstraints maxHeight="100.0" minHeight="9.0" prefHeight="83.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="92.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1000.0" minHeight="10.0" prefHeight="490.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="69.0" minHeight="10.0" prefHeight="69.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
    </rowConstraints>
-   <VBox prefHeight="380.0" prefWidth="173.0" GridPane.rowSpan="3">
+   <VBox prefHeight="380.0" prefWidth="173.0" style="-fx-background-color: #8527FF;" GridPane.rowSpan="5">
       <opaqueInsets>
-         <Insets/>
+         <Insets />
       </opaqueInsets>
       <GridPane.margin>
-         <Insets left="20.0" top="20.0"/>
+         <Insets />
       </GridPane.margin>
-      <Hyperlink text="Dashboard">
+      <Hyperlink text="Dashboard" textFill="WHITE">
          <font>
-            <Font size="20.0"/>
+            <Font name="System Bold" size="25.0" />
          </font>
          <VBox.margin>
-            <Insets top="10.0"/>
+            <Insets bottom="-70.0" left="40.0" top="80.0" />
          </VBox.margin>
       </Hyperlink>
-      <Hyperlink text="Food List">
+      <Hyperlink text="Food List" textFill="WHITE">
          <font>
-            <Font size="20.0"/>
+            <Font name="System Bold" size="25.0" />
          </font>
          <VBox.margin>
-            <Insets top="10.0"/>
+            <Insets bottom="-70.0" left="40.0" top="80.0" />
          </VBox.margin>
       </Hyperlink>
-      <Hyperlink text="Shopping List">
+      <Hyperlink text="Shopping List" textFill="WHITE">
          <font>
-            <Font size="20.0"/>
+            <Font name="System Bold" size="25.0" />
          </font>
          <VBox.margin>
-            <Insets top="10.0"/>
+            <Insets bottom="-70.0" left="40.0" top="80.0" />
          </VBox.margin>
       </Hyperlink>
    </VBox>
-   <Label text="Dashboard" GridPane.columnIndex="1">
+   <Label text="Dashboard" textFill="#8527ff" GridPane.columnIndex="1" GridPane.valignment="BOTTOM">
       <font>
-         <Font name="System Bold" size="37.0"/>
+         <Font name="System Bold" size="37.0" />
       </font>
+      <GridPane.margin>
+         <Insets left="20.0" />
+      </GridPane.margin>
    </Label>
    <HBox prefHeight="53.0" prefWidth="463.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-      <Button mnemonicParsing="false" onAction="#prevButtonPressed" text="Prev"/>
-      <Label fx:id="lblDay" text="Day 1">
+      <Button cache="true" mnemonicParsing="false" onAction="#prevButtonPressed" prefHeight="29.0" prefWidth="39.0" style="-fx-padding: 0; -fx-background-color: #383838;">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../Icons/back-arrow.png"/>
+            </ImageView>
+         </graphic>
+         <HBox.margin>
+            <Insets left="15.0" />
+         </HBox.margin></Button>
+      <Label fx:id="lblDay" text="Day 1" textFill="#eeeeee">
          <font>
-            <Font size="15.0"/>
+            <Font size="18.0" />
          </font>
          <HBox.margin>
-            <Insets left="5.0" right="5.0" top="2.0"/>
+            <Insets left="5.0" right="5.0" top="2.0" />
          </HBox.margin>
       </Label>
-      <Button mnemonicParsing="false" onAction="#nextButtonPressed" text="Next"/>
+      <Button mnemonicParsing="false" onAction="#nextButtonPressed" style="-fx-background-color: none; -fx-padding: 0;">
+         <graphic>
+            <ImageView fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <Image url="@../Icons/next-button.png"/>
+            </ImageView>
+         </graphic></Button>
    </HBox>
-   <Label fx:id="totalCarbs" alignment="CENTER" prefHeight="17.0" prefWidth="50.0" text="420" GridPane.columnIndex="2"
-          GridPane.halignment="CENTER" GridPane.rowIndex="4">
+   <Label fx:id="totalCarbs" alignment="CENTER" prefHeight="17.0" prefWidth="50.0" text="420" textFill="#eeeeee" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
       <GridPane.margin>
-         <Insets/>
+         <Insets left="5.0" />
       </GridPane.margin>
       <font>
-         <Font name="System Bold" size="18.0"/>
+         <Font name="System Bold" size="22.0" />
       </font>
    </Label>
-   <Label fx:id="totalFats" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="60"
-          GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+   <Label fx:id="totalFats" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="60" textFill="#eeeeee" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="4">
       <GridPane.margin>
-         <Insets/>
+         <Insets left="42.0" />
       </GridPane.margin>
       <font>
-         <Font name="System Bold" size="18.0"/>
+         <Font name="System Bold" size="22.0" />
       </font>
    </Label>
-   <Label fx:id="totalProtein" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="120"
-          GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+   <Label fx:id="totalProtein" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="120" textFill="#eeeeee" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="4">
       <GridPane.margin>
-         <Insets/>
+         <Insets left="55.0" />
       </GridPane.margin>
       <font>
-         <Font name="System Bold" size="18.0"/>
+         <Font name="System Bold" size="22.0" />
       </font>
    </Label>
-   <Label fx:id="totalCalories" alignment="CENTER" contentDisplay="CENTER" prefWidth="50.0" text="1000"
-          GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+   <Label fx:id="totalCalories" alignment="CENTER" contentDisplay="CENTER" prefWidth="60.0" text="1000" textFill="#eeeeee" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="4">
       <GridPane.margin>
-         <Insets/>
+         <Insets left="40.0" />
       </GridPane.margin>
       <font>
-         <Font name="System Bold" size="18.0"/>
+         <Font name="System Bold" size="22.0" />
       </font>
    </Label>
-   <ListView fx:id="foodListView" prefHeight="287.0" prefWidth="572.0" GridPane.columnIndex="1" GridPane.columnSpan="6"
-             GridPane.rowIndex="2"/>
+   <ListView fx:id="foodListView" prefHeight="287.0" prefWidth="572.0" stylesheets="@../style.css" GridPane.columnIndex="1" GridPane.columnSpan="6" GridPane.rowIndex="2" />
    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-      <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#addFoodPressed"
-              text="Add Food"/>
+      <Button alignment="TOP_LEFT" contentDisplay="TOP" mnemonicParsing="false" onAction="#addFoodPressed" text="Add Food">
+         <HBox.margin>
+            <Insets left="15.0" />
+         </HBox.margin></Button>
       <Button mnemonicParsing="false" onAction="#removeButtonPressed" text="Clear Day">
          <HBox.margin>
-            <Insets left="10.0"/>
+            <Insets left="10.0" />
          </HBox.margin>
       </Button>
+      <GridPane.margin>
+         <Insets top="5.0" />
+      </GridPane.margin>
    </HBox>
-   <Label text="Total" GridPane.columnIndex="1" GridPane.rowIndex="4">
+   <Label text="Total" textFill="#eeeeee" GridPane.columnIndex="1" GridPane.rowIndex="4">
       <font>
-         <Font name="System Bold" size="25.0"/>
+         <Font name="System Bold" size="25.0" />
       </font>
+      <GridPane.margin>
+         <Insets left="20.0" />
+      </GridPane.margin>
    </Label>
-   <Label text="Carbs" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+   <Label text="Carbs" textFill="#eeeeee" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
       <font>
-         <Font size="15.0"/>
+         <Font size="18.0" />
       </font>
+      <GridPane.margin>
+         <Insets left="5.0" />
+      </GridPane.margin>
    </Label>
-   <Label text="Fats" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+   <Label text="Fats" textFill="#eeeeee" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
       <font>
-         <Font size="15.0"/>
+         <Font size="18.0" />
       </font>
+      <GridPane.margin>
+         <Insets left="42.0" />
+      </GridPane.margin>
    </Label>
-   <Label text="Protein" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+   <Label text="Protein" textFill="#eeeeee" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
       <font>
-         <Font size="15.0"/>
+         <Font size="18.0" />
       </font>
+      <GridPane.margin>
+         <Insets left="55.0" />
+      </GridPane.margin>
    </Label>
-   <Label text="Calories" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+   <Label text="Calories" textFill="#eeeeee" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
       <font>
-         <Font size="15.0"/>
+         <Font size="18.0" />
       </font>
+      <GridPane.margin>
+         <Insets left="40.0" />
+      </GridPane.margin>
    </Label>
 </GridPane>

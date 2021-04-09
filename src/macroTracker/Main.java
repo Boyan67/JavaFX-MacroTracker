@@ -14,6 +14,7 @@ public class Main extends Application {
         primaryStage.setTitle("Macro Tracker");
 
         Scene scene = new Scene(root, 720, 480);
+        primaryStage.setMaximized(true);
         primaryStage.setScene(scene);
         primaryStage.show();
     }

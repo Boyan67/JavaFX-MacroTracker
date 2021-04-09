@@ -5,17 +5,21 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import macroTracker.Classes.Food;
 import macroTracker.Classes.FoodDiary;
@@ -80,8 +84,14 @@ public class DashboardController {
             SavedFoodsController savedFoodsController = loader.getController();
             savedFoodsController.setDiaryID(foodDiary.getId());
 
-            Scene HomeScene = new Scene(root,810,500);
+            Scene HomeScene = new Scene(root);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            //set Stage boundaries to visible bounds of the main screen
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+            window.setWidth(primaryScreenBounds.getWidth());
+            window.setHeight(primaryScreenBounds.getHeight());
+
             window.setScene(HomeScene);
             window.show();
         } catch (IOException e) {
@@ -154,14 +164,21 @@ public class DashboardController {
             category = new VBox();
             Pane a = new Pane();
             a.setStyle("-fx-background-color: " + determineColor(food));
-            a.setPadding(new Insets(10, 0, 10, 0));
+            a.setPadding(new Insets(10, 0, 30, 0));
             category.getChildren().add(a);
+
+
             name = new Label(food.getName());
             carbs = new Label(Integer.toString(food.getCarbs()));
             fats = new Label(Integer.toString(food.getFats()));
             protein = new Label(Integer.toString(food.getProtein()));
             calories = new Label(Integer.toString(food.getCalories()));
-            btn = new Button("Delete");
+            btn = new Button();
+            Image img = new Image("macroTracker\\Icons\\delete.png");
+            ImageView imageView = new ImageView(img);
+            imageView.setFitHeight(30);
+            imageView.setFitWidth(30);
+            btn.setGraphic(imageView);
             btn.setOnAction(event -> removeSelectedFood(food.getId()));
             categoryName = food.getCategory();
 
@@ -175,8 +192,8 @@ public class DashboardController {
 
         public GridPane createFoodGrid(){
             ColumnConstraints col0 = new ColumnConstraints();
-            col0.setPrefWidth(10);
-            category.setPadding(new Insets(2, 5, 0, 0));
+            col0.setPrefWidth(13);
+            category.setPadding(new Insets(0, 7, 0, 0));
             ColumnConstraints col1 = new ColumnConstraints();
             col1.setPercentWidth(37);
             ColumnConstraints col2 = new ColumnConstraints();
@@ -193,7 +210,9 @@ public class DashboardController {
             col5.setHalignment(HPos.CENTER);
             ColumnConstraints col6 = new ColumnConstraints();
             col6.setPercentWidth(12);
-            col6.setHalignment(HPos.CENTER);
+            col6.setHalignment(HPos.RIGHT);
+            btn.setPrefWidth(70);
+
 
             grid.getColumnConstraints().addAll(col0, col1,col2,col3, col4, col5, col6);
 
@@ -204,9 +223,10 @@ public class DashboardController {
             grid.add(protein, 4, 0, 1, 1);
             grid.add(calories, 5, 0, 1, 1);
             grid.add(btn, 6, 0, 1, 1);
-
+            grid.getStyleClass().addAll("grid");
 
             grid.addEventFilter(MouseEvent.MOUSE_CLICKED, eventHandler);
+
 
             return grid;
         }
