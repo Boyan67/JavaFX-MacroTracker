@@ -38,6 +38,25 @@ public class Database {
         }
     }
 
+    public ArrayList<String> getIngredientsList(){
+        ArrayList<String> ingredients = new ArrayList<>();
+        Statement statement;
+        ResultSet rs;
+        for (int i = 1; i <= 7; i++){
+            try {
+                String sql = "SELECT ingredients FROM " + "day"+i;
+                statement = connection.createStatement();
+                rs = statement.executeQuery(sql);
+                while (rs.next()){
+                    ingredients.add(rs.getString(1));
+                }
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        }
+        return ingredients;
+    }
+
     public ArrayList<Food> getAllFoods(){
         Statement statement;
         ResultSet rs;

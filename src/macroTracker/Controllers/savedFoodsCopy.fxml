@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<GridPane maxHeight="1.7976931348623157E308" prefHeight="700.0" prefWidth="1000.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="macroTracker.Controllers.SavedFoodsController">
+   <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" percentWidth="20.0" prefWidth="300.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1700.0" minWidth="10.0" percentWidth="80.0" prefWidth="813.0" />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="1300.0" minHeight="10.0" prefHeight="597.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="80.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
+   </rowConstraints>
+   <children>
+      <TableView fx:id="savedFoodsTable" prefHeight="381.0" prefWidth="1920.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <columns>
+            <TableColumn fx:id="category" prefWidth="274.0" text="Category" />
+          <TableColumn fx:id="name" prefWidth="548.0" text="Name" />
+            <TableColumn fx:id="carbs" prefWidth="137.0" style="-fx-alignment: CENTER" text="Carbs" />
+            <TableColumn fx:id="fats" prefWidth="137.0" style="-fx-alignment: CENTER" text="Fats" />
+            <TableColumn fx:id="protein" prefWidth="137.0" style="-fx-alignment: CENTER" text="Protein" />
+            <TableColumn fx:id="calories" prefWidth="137.0" style="-fx-alignment: CENTER" text="Calories" />
+            <TableColumn fx:id="ingredients" prefWidth="549.0" text="Ingredients" />
+        </columns>
+      </TableView>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #8527FF;" GridPane.rowSpan="2147483647">
+         <children>
+            <Hyperlink onAction="#dashboardLinkPressed" text="Dashboard" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="-70.0" left="40.0" top="80.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink text="Food List" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="-70.0" left="40.0" top="80.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Hyperlink>
+            <Hyperlink onAction="#shoppingListLink" text="Shopping List" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="-70.0" left="40.0" top="80.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Hyperlink>
+            <Line endX="-26.5" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="5.0">
+               <VBox.margin>
+                  <Insets left="48.0" top="4.0" />
+               </VBox.margin>
+            </Line>
+         </children></VBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
+         <children>
+            <TextField fx:id="filterField" prefHeight="38.0" prefWidth="240.0">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" text="New Food">
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </Button>
+            <Pane prefHeight="117.0" prefWidth="85.0" HBox.hgrow="ALWAYS" />
+            <ComboBox fx:id="pickCategory" prefHeight="37.0" prefWidth="150.0" promptText="Pick Category" style="-fx-background-color: #8527FF;">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin></ComboBox>
+            <ComboBox fx:id="pickMacroFilter" prefHeight="37.0" prefWidth="150.0" promptText="Filter By" style="-fx-background-color: #8527FF;">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin></ComboBox>
+         </children>
+      </HBox>
+      <Button mnemonicParsing="false" onAction="#deleteSelected" text="Delete Selected" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets left="20.0" />
+         </GridPane.margin>
+      </Button>
+   </children>
+</GridPane>

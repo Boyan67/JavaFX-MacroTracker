@@ -13,8 +13,26 @@
     -fx-background-radius: 0;
 }
 
+.check-box {
+    -fx-text-fill: #eee;
+    -fx-font-size: 18;
+}
+
+.hyperlink {
+    -fx-border-color: transparent;
+    -fx-underline: false;
+}
 #cancelButton{
     -fx-font-size: 12;
+}
+#generateListButton{
+    -fx-font-size: 22;
+}
+
+
+#cancelAdd{
+    -fx-font-size: 14;
+    -fx-font-weight: 300;
 }
 
 .combo-box .list-cell { -fx-text-fill: #eee; }

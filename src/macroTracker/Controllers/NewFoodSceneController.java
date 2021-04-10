@@ -71,6 +71,7 @@ public class NewFoodSceneController {
         int calories = Integer.parseInt(fieldCalories.getText());
         String category = String.valueOf(choiceCategory.getSelectionModel().getSelectedItem());
         String ingredients = txtAreaIngredients.getText();
+        ingredients = ingredients.replaceAll("[\\n\\t ]", " ");
 
         Food food = new Food(name, carbs, fats, protein, calories, category, ingredients);
         database.insertFood(food);

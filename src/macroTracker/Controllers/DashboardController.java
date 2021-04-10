@@ -100,6 +100,45 @@ public class DashboardController {
         }
     }
 
+    public void savedFoodLink(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("savedFoodsCopy.fxml"));
+            Parent root = loader.load();
+            Scene HomeScene = new Scene(root);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+            //set Stage boundaries to visible bounds of the main screen
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+            window.setWidth(primaryScreenBounds.getWidth());
+            window.setHeight(primaryScreenBounds.getHeight());
+
+            window.setScene(HomeScene);
+            window.show();
+        } catch (IOException e) {
+            System.out.println("addFood Button Error: ");
+            e.printStackTrace();
+        }
+    }
+
+    public void shoppingListLink(javafx.event.ActionEvent event){
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("shoppingListPage.fxml"));
+            Parent root = null;
+            root = loader.load();
+            Scene HomeScene = new Scene(root,750,500);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            Rectangle2D primaryScreenBounds = Screen.getPrimary().getVisualBounds();
+            window.setWidth(primaryScreenBounds.getWidth());
+            window.setHeight(primaryScreenBounds.getHeight());
+            window.setScene(HomeScene);
+            window.show();
+        } catch (IOException e) {
+            System.out.println("shoppingListLink() Error: ");
+            e.printStackTrace();
+        }
+    }
+
+
     // ========== Functionality ==========
     public void fillDiary(){
         FoodGrid foodGrid;
@@ -128,9 +167,13 @@ public class DashboardController {
         this.idsToAdd = idsToAdd;
     }
     public void addSelectedFoods(int diaryID){
+        updateDiaryID(diaryID);
+        foodDiary.addSelectedFoods(idsToAdd);
+        showTable();
+    }
+    public void updateDiaryID(int diaryID){
         foodDiary.changeDiary(diaryID);
         lblDay.setText("Day " + foodDiary.getId());
-        foodDiary.addSelectedFoods(idsToAdd);
         showTable();
     }
 

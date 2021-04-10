@@ -80,7 +80,7 @@ public class SavedFoodsController {
         fats.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.05));
         protein.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.05));
         calories.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.1));
-        ingredients.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.298));
+        ingredients.prefWidthProperty().bind(savedFoodsTable.widthProperty().multiply(0.297));
 
 
         pickCategory.getItems().add("Breakfast");
@@ -118,7 +118,57 @@ public class SavedFoodsController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
+    public void cancelPressed(javafx.event.ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboardPage.fxml"));
+            Parent root = loader.load();
+
+            DashboardController controller2 = loader.getController();
+            controller2.updateDiaryID(diaryID);
+
+            Scene HomeScene = new Scene(root, 750, 500);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            //window.setMaximized(true);
+            window.setScene(HomeScene);
+            window.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void dashboardLinkPressed(javafx.event.ActionEvent event){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboardPage.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+            Scene HomeScene = new Scene(root,750,500);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            //window.setMaximized(true);
+            window.setScene(HomeScene);
+            window.show();
+        } catch (IOException e) {
+            System.out.println("dashBoardLinkPressed() Error: ");
+            e.printStackTrace();
+        }
+    }
+
+    public void shoppingListLink(javafx.event.ActionEvent event){
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("shoppingListPage.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+            Scene HomeScene = new Scene(root,750,500);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            //window.setMaximized(true);
+            window.setScene(HomeScene);
+            window.show();
+        } catch (IOException e) {
+            System.out.println("shoppingListLink() Error: ");
+            e.printStackTrace();
+        }
     }
 
     public void newFoodPressed(javafx.event.ActionEvent event){
