@@ -46,6 +46,7 @@ Key Features:
 ### Built With
 
 * [JavaFX](https://openjfx.io)
+* [MySQL](https://www.mysql.com)
 
 ### Screenshots
 Dashboard Page
