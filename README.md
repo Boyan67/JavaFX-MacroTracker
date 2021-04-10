@@ -3,11 +3,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
-  <h3 align="center">JavaFX-MacroTracker</h3>
+  <h1 align="center">JavaFX-MacroTracker</h1>
 
   <p align="center">
     A Simple Macro Tracking Application Made using JavaFX
